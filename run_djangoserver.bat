@@ -1,2 +1,2 @@
 
-start cmd /k .\venv\Scripts\activate	&& python manage.py runserver_plus --nopin
+start cmd /k .\venv\Scripts\activate	&& python manage.py runserver --settings=brainbooks.settings.development

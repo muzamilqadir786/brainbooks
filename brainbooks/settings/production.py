@@ -46,10 +46,21 @@ WSGI_APPLICATION = 'brainbooks.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
-    'default': {
-       'ENGINE': 'django.db.backends.sqlite3',
-       'NAME': BASE_DIR / 'db.sqlite3',
+   'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'd586ugq98avemg',
+        'USER': 'ilxuiughrajugs',
+        'PASSWORD': '66c33bcdb8d5af72b3e7b142ed0b74c2963e494121ef7619d4305e25399815e8',
+        'HOST': 'ec2-52-200-215-149.compute-1.amazonaws.com',
+        'PORT': '5432', #5432
     }
 }
 
