@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-cdwcsgx^d_2i+(#ec&b(x$ecq4wx@9(nvq%s!6dq%vyt+(^l=f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.herokuapp.com']
 
 INSTALLED_APPS += [
     'django_heroku'
@@ -58,11 +58,13 @@ DATABASES = {
 
 STATIC_URL = 'static/'
 
-STATIC_ROOT = 'staticfiles' #Useless in development, no need to set it
+STATIC_ROOT = BASE_DIR / 'staticfiles' #Useless in development, no need to set it
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 django_heroku.settings(locals())
