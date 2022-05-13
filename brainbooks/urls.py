@@ -20,5 +20,10 @@ urlpatterns = [
     # path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
     path('', include('questions.urls')),
-    # path('__debug__/', include('debug_toolbar.urls')),
 ]
+
+from django.conf import settings
+if settings.LOCAL_DEV:
+    urlpatterns += [
+        path('__debug__/', include('debug_toolbar.urls')),
+    ]
