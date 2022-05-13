@@ -1,0 +1,5 @@
+Django==4.0.4
+ipdb==0.13.9
+whitenoise
+gunicorn
+django-heroku
