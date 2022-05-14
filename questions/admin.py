@@ -31,9 +31,9 @@ class UnitAdmin(admin.ModelAdmin):
     search_fields=['unit_number','unit_name']
     # def unit_class(self, obj,):
 
-# @admin.register(Question)
-# class QuestionAdmin(admin.ModelAdmin):
-#     list_display = [field.name for field in Question._meta.get_fields()]
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Question._meta.get_fields()]
 
 
 admin.site.site_header = "Question Bank Administration"
