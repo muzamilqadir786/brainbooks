@@ -19,20 +19,21 @@ class SubjectAdmin(admin.ModelAdmin):
     # list_display = [field.name for field in Subject._meta.get_fields()]
     # filter_horizontal = ('classes',)
 
-
+@admin.register(SubjectClass)
 class SubjectClassAdmin(admin.ModelAdmin):
     list_display = ['subject_class', 'subject_name']
 
 @admin.register(Unit)
 class UnitAdmin(admin.ModelAdmin):
-    list_display = [str(field.name) for field in Unit._meta.get_fields()]
-    # list_display=['get_subject','unit_number','unit_name',]
+    # list_display = [str(field.name) for field in Unit._meta.get_fields()]
+    list_display=['unit_number','unit_name','get_unit_subjects']
     list_filter=['unit_name', 'unit_number']
     search_fields=['unit_number','unit_name']
+    # def unit_class(self, obj,):
 
-@admin.register(Question)
-class QuestionAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Question._meta.get_fields()]
+# @admin.register(Question)
+# class QuestionAdmin(admin.ModelAdmin):
+#     list_display = [field.name for field in Question._meta.get_fields()]
 
 
 admin.site.site_header = "Question Bank Administration"

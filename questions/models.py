@@ -84,8 +84,8 @@ class SubjectClass(models.Model):
         verbose_name_plural = 'Class Subjects'
         unique_together = ['subject_class', 'subject_name']
 
-    def __str(self):
-        return '{} {}'.format(self.subject_name, self.subject_class)
+    def __str__(self):
+        return '{} {}'.format(self.subject_name.subject, self.subject_class)
 
 class Unit(models.Model):
     unit_subject = models.ForeignKey('Subject', on_delete=models.CASCADE, blank=True, null=True)
@@ -102,6 +102,9 @@ class Unit(models.Model):
         unique = True,
         verbose_name = 'Unit Name',
     )
+
+    def get_unit_subjects(self):
+        return Unit.objects.get(id=self.id).unit_subject
 
     class Meta:
         unique_together = ['unit_subject', 'unit_number']
