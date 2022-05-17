@@ -38,8 +38,6 @@ INSTALLED_APPS += [
 ]
 
 
-
-
 WSGI_APPLICATION = 'brainbooks.wsgi.application'
 
 
