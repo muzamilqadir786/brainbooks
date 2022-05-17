@@ -53,7 +53,9 @@ class Class(models.Model):
     def insert_data():
         for key,value in dict(CLASS_CHOICES).items():
             class_obj = Class()
-            obj, created = Class.objects.get_or_create(class_name=key)
+            board = Board()
+            board.board = 'PJ'
+            obj, created = Class.objects.get_or_create(class_name=key,board=board)
             if created:
                 print("Object created with class {} created successfully.".format(key))
             else:
