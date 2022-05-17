@@ -52,15 +52,11 @@ class Class(models.Model):
     @staticmethod
     def insert_data():
         for key,value in dict(CLASS_CHOICES).items():
-            class_obj = Class()
-            board = Board()
-            board.board = 'PJ'
-            board.save()
-            obj, created = Class.objects.get_or_create(class_name=key,board=board)
+            obj, created = Class.objects.get_or_create(class_name=key,board_id=1)
             if created:
-                print("Object created with class {} created successfully.".format(key))
+                print("Class Object created with class {} created successfully.".format(key))
             else:
-                print("Object already exists")
+                print("Class Object already exists")
 
 
 # SUBJECT_CHOICES = [
