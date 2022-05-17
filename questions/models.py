@@ -79,7 +79,7 @@ class Subject(models.Model):
     board = models.ForeignKey('Board', blank=True, null=True, on_delete=models.CASCADE)
     class_name = models.ForeignKey('Class', blank=True, null=True, on_delete=models.CASCADE)
     subject = models.CharField(
-        max_length=30,
+        max_length=100,
         blank=True,
         unique = True
     )
