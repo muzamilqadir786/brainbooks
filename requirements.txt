@@ -1,5 +1,5 @@
 Django==4.0.4
-ipdb==0.13.9
+django_heroku==0.3.1
+requests==2.27.1
 whitenoise
 gunicorn
-django-heroku
