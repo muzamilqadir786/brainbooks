@@ -55,6 +55,7 @@ class Class(models.Model):
             class_obj = Class()
             board = Board()
             board.board = 'PJ'
+            board.save()
             obj, created = Class.objects.get_or_create(class_name=key,board=board)
             if created:
                 print("Object created with class {} created successfully.".format(key))
