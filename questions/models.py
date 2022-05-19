@@ -165,12 +165,13 @@ class Chapter(models.Model):
                         if data.get('class_id'):
                             chapter.class_name_id = data['class_id']
                         if data.get('chapter'):
-                            chapter.chapter = data['chapter']
+                            chapter.chapter = int(data['chapter'])
                         if data.get('title'):
                             chapter.title = data['title']
                         try:
                             # import ipdb
                             # ipdb.set_trace()
+                            # ch = chapter.objects.add(chapter)
                             chapter.save()
                         except Exception as e:
                             print(e)

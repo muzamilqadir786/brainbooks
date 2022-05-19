@@ -22,11 +22,17 @@ class SubjectAdmin(admin.ModelAdmin):
     def class_name(self,obj):
         return obj.class_name
 
+import ipdb
 @admin.register(Chapter)
 class ChapterAdmin(admin.ModelAdmin):
-    list_display = ['id', 'subject_id', 'board', 'class_name','__str__', 'subject', 'chapter', 'title', 'status']
-    def subject(self, obj):
-        return obj.subject
+    list_display = ['id', 'subject_id', 'board', 'class_name','__str__', 'get_subject', 'chapter', 'title', 'status']
+    def get_subject(self, obj):
+        # ipdb.set_trace()
+        return obj.subject_id
+    def class_name(self,obj):
+        return obj.class_name
+    get_subject.short_description = 'My Subjects'
+    # get_author.admin_order_field = 'book__author'
 
 
 # @admin.register(SubjectClass)
