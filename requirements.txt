@@ -5,3 +5,4 @@ pillow
 whitenoise
 gunicorn
 ipdb
+psycopg2
