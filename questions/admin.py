@@ -32,6 +32,7 @@ class ChapterAdmin(admin.ModelAdmin):
     def class_name(self,obj):
         return obj.class_name
     get_subject.short_description = 'My Subjects'
+    class_name.short_description = 'My Class'
     # get_author.admin_order_field = 'book__author'
 
 

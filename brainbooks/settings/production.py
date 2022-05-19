@@ -53,7 +53,7 @@ WSGI_APPLICATION = 'brainbooks.wsgi.application'
 
 DATABASES = {
    'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'postgres://ilxuiughrajugs:66c33bcdb8d5af72b3e7b142ed0b74c2963e494121ef7619d4305e25399815e8@ec2-52-200-215-149.compute-1.amazonaws.com:5432/d586ugq98avemg',
         'NAME': 'd586ugq98avemg',
         'USER': 'ilxuiughrajugs',
         'PASSWORD': '66c33bcdb8d5af72b3e7b142ed0b74c2963e494121ef7619d4305e25399815e8',
