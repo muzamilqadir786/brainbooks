@@ -9,7 +9,7 @@ class BoardAdmin(admin.ModelAdmin):
 @admin.register(Class)
 class ClassAdmin(admin.ModelAdmin):
     list_display = ['id','__str__', 'board_name','status','icon']
-    raw_id_fields = ("board",)
+    # raw_id_fields = ("board",)
     def board_name(self,obj):
         # return obj.__dict__
         return obj.board.__str__()
@@ -17,7 +17,7 @@ class ClassAdmin(admin.ModelAdmin):
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
     list_display = ['id', 'subject_id', 'board_name', 'class_name','__str__', 'total_type_questions', 'status', 'icon']
-    raw_id_fields = ("board","class_name",)
+    # raw_id_fields = ("board","class_name",)
     # list_display = [field.name for field in Subject._meta.get_fields()]
     # filter_horizontal = ('classes',)
     def board_name(self,obj):
