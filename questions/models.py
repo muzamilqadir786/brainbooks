@@ -15,7 +15,8 @@ BOARD_CHOICES = [
     (BLOCHISTAN, 'Balochistan'),
 ]
 class Board(models.Model):
-    name = models.PositiveSmallIntegerField(
+    name = models.CharField(
+        max_length=1,
         choices=BOARD_CHOICES,
         unique = True,
         )
@@ -28,6 +29,8 @@ class Board(models.Model):
     @staticmethod
     def insert_data():
         for board in dict(BOARD_CHOICES).keys():
+            import ipdb
+            ipdb.set_trace()
             board_obj, created = Board.objects.get_or_create(name=board,id=board)
             if created:
                 print("Created board with id:{}".format(board))
