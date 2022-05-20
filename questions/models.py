@@ -52,7 +52,7 @@ class Class(models.Model):
     board = models.ForeignKey('Board', blank=True, null=True, on_delete=models.CASCADE)
     name = models.PositiveSmallIntegerField(
         choices=CLASS_CHOICES,
-        db_column = 'class',
+        # db_column = 'class',
     )
 
     status = models.BooleanField(default=True)
