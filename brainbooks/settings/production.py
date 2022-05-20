@@ -53,11 +53,11 @@ WSGI_APPLICATION = 'brainbooks.wsgi.application'
 
 DATABASES = {
    'default': {
-        'ENGINE': 'postgres://ilxuiughrajugs:66c33bcdb8d5af72b3e7b142ed0b74c2963e494121ef7619d4305e25399815e8@ec2-52-200-215-149.compute-1.amazonaws.com:5432/d586ugq98avemg',
-        'NAME': 'd586ugq98avemg',
-        'USER': 'ilxuiughrajugs',
-        'PASSWORD': '66c33bcdb8d5af72b3e7b142ed0b74c2963e494121ef7619d4305e25399815e8',
-        'HOST': 'ec2-52-200-215-149.compute-1.amazonaws.com',
+        'ENGINE': 'postgres://vavwrsmtlhzbyq:c3b6c85edbd8fd2629440042c609499b3386bede6a9c86497f1df1ffc6f1e9d4@ec2-3-231-82-226.compute-1.amazonaws.com:5432/dak0huv35dcv2c',
+        'NAME': 'dak0huv35dcv2c',
+        'USER': 'vavwrsmtlhzbyq',
+        'PASSWORD': 'c3b6c85edbd8fd2629440042c609499b3386bede6a9c86497f1df1ffc6f1e9d4',
+        'HOST': 'ec2-3-231-82-226.compute-1.amazonaws.com',
         'PORT': '5432', #5432
     }
 }
