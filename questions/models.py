@@ -4,15 +4,18 @@ import requests
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 # Create your models here.
+PUNJAB = 1
+SINDH = 2
+KHYBER_PAKHTUNKHWA = 3
+BLOCHISTAN = 4
 BOARD_CHOICES = [
-    ('PJ', 'Punjab'),
-    ('SN', 'Sindh'),
-    ('KP', 'Khyber Pakhtunkhwa'),
-    ('BL', 'Balochistan'),
+    (PUNJAB, 'Punjab'),
+    (SINDH, 'Sindh'),
+    (KHYBER_PAKHTUNKHWA, 'Khyber Pakhtunkhwa'),
+    (BLOCHISTAN, 'Balochistan'),
 ]
 class Board(models.Model):
-    board = models.CharField(
-        max_length=2,
+    name = models.PositiveSmallIntegerField(
         choices=BOARD_CHOICES,
         unique = True,
         )
@@ -21,20 +24,30 @@ class Board(models.Model):
         ordering = ['id']
 
     def __str__(self):
-        return dict(BOARD_CHOICES)[self.board]
+        return dict(BOARD_CHOICES)[self.name]
+    @staticmethod
+    def insert_data():
+        for board in dict(BOARD_CHOICES).keys():
+            board_obj, created = Board.objects.get_or_create(name=board,id=board)
+            if created:
+                print("Created board with id:{}".format(board))
+            else:
+                print("Board already exists")
 
-
+NINTH = 1
+TENTH = 2
+FIRST_YEAR = 3
+SECOND_YEAR = 4
 CLASS_CHOICES = [
-    ('9', 'Class-9'),
-    ('10', 'Class-10'),
-    ('11', 'Inter Part-I'),
-    ('12', 'Inter Part-II'),
+    (NINTH, 'Class-9'),
+    (TENTH, 'Class-10'),
+    (FIRST_YEAR, 'Inter Part-I'),
+    (SECOND_YEAR, 'Inter Part-II'),
 ]
 
 class Class(models.Model):
     board = models.ForeignKey('Board', blank=True, null=True, on_delete=models.CASCADE)
-    class_name = models.CharField(
-        max_length=2,
+    name = models.PositiveSmallIntegerField(
         choices=CLASS_CHOICES,
         db_column = 'class',
     )
@@ -42,56 +55,42 @@ class Class(models.Model):
     status = models.BooleanField(default=True)
     icon = models.ImageField(upload_to ='icons/', blank=True)
     def __str__(self):
-        return dict(CLASS_CHOICES)[self.class_name]
+        return dict(CLASS_CHOICES)[self.name]
 
     class Meta:
         ordering = ['id']
         verbose_name_plural = "Classes"
-        unique_together = ['board','class_name']
+        unique_together = ['board','name']
 
     @staticmethod
     def insert_data():
+        board_obj, created = Board.objects.get_or_create(name=PUNJAB)
         for key,value in dict(CLASS_CHOICES).items():
-            obj, created = Class.objects.get_or_create(class_name=key,board_id=1)
+            obj, created = Class.objects.get_or_create(class_name=key,board=board_obj,id=key)
             if created:
                 print("Class Object created with class {} created successfully.".format(key))
             else:
                 print("Class Object already exists")
 
-
-# SUBJECT_CHOICES = [
-#     ('URD', 'Urdu'),
-#     ('ENG', 'English'),
-#     ('ISL', 'Islamiyat'),
-#     ('PHY', 'Physics'),
-#     ('CHE', 'Chemistry'),
-#     ('BIO', 'Biology'),
-#     ('MTM', 'Mathematics'),
-#     ('CMP', 'Computer'),
-#     ('STA', 'Statistics'),
-#
-# ]
-#from django.utils.encoding import uri_to_iri
-
 class Subject(models.Model):
     subject_id = models.PositiveIntegerField(blank=True, null=True)
     board = models.ForeignKey('Board', blank=True, null=True, on_delete=models.CASCADE)
     class_name = models.ForeignKey('Class', blank=True, null=True, on_delete=models.CASCADE)
-    subject = models.CharField(
+    name = models.CharField(
         max_length=100,
         blank=True,
         unique = True
     )
-    total_type_questions = models.PositiveSmallIntegerField()
+    total_type_questions = models.PositiveSmallIntegerField(blank=True, null=True)
     status = models.BooleanField(default=True)
     icon = models.ImageField(upload_to ='icons/', blank=True)
 
     class Meta:
-        unique_together = ['subject', 'class_name']
+        unique_together = ['name', 'class_name']
         ordering = ['id']
 
     def __str__(self):
-        return self.subject
+        return self.name
 
     @staticmethod
     def insert_data():
@@ -99,7 +98,7 @@ class Subject(models.Model):
         payload = {}
         for each_class in range(1, 5):
             payload['class_id'] = each_class
-            response = requests.get(url, params=payload)
+            response = requests.post(url, data=payload)
             if response.status_code == 200:
                 json_data = json.loads(response.text)
                 for data in json_data['data']:
@@ -107,11 +106,14 @@ class Subject(models.Model):
                     if data.get('subject_id'):
                         subject.subject_id = data['subject_id']
                     if data.get('board_id'):
-                        subject.board_id = data['board_id']
+                        board_obj, created = Board.objects.get_or_create(id=data['board_id'])
+                        subject.board = board_obj
                     if data.get('class_id'):
-                        subject.class_name_id = data['class_id']
+                        class_id = data['class_id']
+                        class_obj, created = Class.objects.get_or_create(class_name=class_id)
+                        subject.class_name = class_obj
                     if data.get('subject'):
-                        subject.subject = data['subject']
+                        subject.name = data['subject']
                     if data.get('total_type_questions'):
                         subject.total_type_questions = data['total_type_questions']
                     try:
@@ -153,25 +155,27 @@ class Chapter(models.Model):
             if response.status_code == 200:
                 json_data = json.loads(response.text)
                 if json_data.get('data'):
-
                     for data in json_data['data']:
                         chapter = Chapter()
                         if data.get('ch_id'):
                             chapter.chapter_id = data['ch_id']
                         if data.get('subject_id'):
-                            chapter.subject_id = data['subject_id']
+                            subject_obj, created = Subject.objects.get_or_create(subject_id=data['subject_id'])
+                            chapter.subject = subject_obj
                         if data.get('board_id'):
+                            board_obj, created = Board.objects.get_or_create(id=data['board_id'])
+                            chapter.board = board_obj
                             chapter.board_id = data['board_id']
                         if data.get('class_id'):
-                            chapter.class_name_id = data['class_id']
+                            # chapter.class_name_id = data['class_id']
+                            class_id = data['class_id']
+                            class_obj, created = Class.objects.get_or_create(name=class_id)
+                            chapter.class_name = class_obj
                         if data.get('chapter'):
                             chapter.chapter = int(data['chapter'])
                         if data.get('title'):
                             chapter.title = data['title']
                         try:
-                            # import ipdb
-                            # ipdb.set_trace()
-                            # ch = chapter.objects.add(chapter)
                             chapter.save()
                         except Exception as e:
                             print(e)
