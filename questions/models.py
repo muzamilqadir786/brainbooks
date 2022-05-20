@@ -25,12 +25,12 @@ class Board(models.Model):
         ordering = ['id']
 
     def __str__(self):
-        return dict(BOARD_CHOICES)[self.name]
+        return dict(BOARD_CHOICES)[int(self.name)]
     @staticmethod
     def insert_data():
         for board in dict(BOARD_CHOICES).keys():
-            import ipdb
-            ipdb.set_trace()
+            # import ipdb
+            # ipdb.set_trace()
             board_obj, created = Board.objects.get_or_create(name=board,id=board)
             if created:
                 print("Created board with id:{}".format(board))
