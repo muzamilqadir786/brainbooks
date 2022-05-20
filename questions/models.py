@@ -113,7 +113,7 @@ class Subject(models.Model):
                         subject.board = board_obj
                     if data.get('class_id'):
                         class_id = data['class_id']
-                        class_obj, created = Class.objects.get_or_create(class_name=class_id)
+                        class_obj, created = Class.objects.get_or_create(name=class_id)
                         subject.class_name = class_obj
                     if data.get('subject'):
                         subject.name = data['subject']
