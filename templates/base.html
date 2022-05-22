@@ -10,13 +10,24 @@
 
     <!--<link rel="stylesheet" href="style.css">-->
     <title>{% block title %}My amazing site{% endblock %}</title>
+    <style>
+        .topnav a:hover {
+            border-bottom: 3px solid red;
+        }
+        @media (min-width: 992px) {
+            .navbar li {
+                margin-left: 3em;
+                margin-right: 3em;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <nav class="py-2 bg-light border-bottom">
-    <div class="container d-flex flex-wrap">
-      <ul class="nav me-auto">
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2 active" aria-current="page">Home</a></li>
+    <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ml-auto topnav">
+        <li class="nav-item"><a href="{% url 'index' %}" class="nav-link link-dark px-2 active" aria-current="page">Home</a></li>
         <li class="nav-item"><a href="{% url 'generate_paper' %}" class="nav-link link-dark px-2">Generate Test(All Types)</a></li>
         <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Online McQ's</a></li>
         <li class="nav-item"><a href="#" class="nav-link link-dark px-2">User Policies</a></li>
@@ -31,17 +42,17 @@
     </div>
   </nav>
 
-    <header class="py-3 mb-4 border-bottom">
-    <div class="container d-flex flex-wrap justify-content-center">
-      <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
-        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-        <span class="fs-4">Double header</span>
-      </a>
-      <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">
-        <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-      </form>
-    </div>
-  </header>
+    <!--<header class="py-3 mb-4 border-bottom">-->
+    <!--<div class="container d-flex flex-wrap justify-content-center">-->
+      <!--<a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">-->
+        <!--<svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>-->
+        <!--<span class="fs-4">Double header</span>-->
+      <!--</a>-->
+      <!--<form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">-->
+        <!--<input type="search" class="form-control" placeholder="Search..." aria-label="Search">-->
+      <!--</form>-->
+    <!--</div>-->
+  <!--</header>-->
 
     <div id="sidebar">
         {% block sidebar %}

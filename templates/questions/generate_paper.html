@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <div class="clearfix mt-5">
+    <form method="post" id="boardsForm" class="float-left ml-5" boards-drop-url="{% url 'ajax_load_dropdown' %}" >
 
-    <form method="post" id="boardsForm" boards-drop-url="{% url 'ajax_load_dropdown' %}" >
-
-        <select id="boardsDropdown">
+        <select id="boardsDropdown" class="selectpicker">
             <option>Select Board</option>
             {% for board in boards %}
                 <option id="{{board.id}}" value="{{board.id}}"> {{board}} </option>
@@ -13,23 +13,26 @@
         </select>
     </form>
 
-    <form method="post" id="classesForm" classes-drop-url="{% url 'ajax_load_dropdown'%}">
-        <select id="classNamesDropdown">
+    <form method="post" id="classesForm" class="float-left ml-5" classes-drop-url="{% url 'ajax_load_dropdown'%}">
+        <select id="classNamesDropdown" class="selectpicker">
             <option>Select Class </option>
         </select>
     </form>
 
-    <form method="post" id="subjectsForm" subjects-drop-url="{% url 'ajax_load_dropdown' %}">
-        <select id="subjectNamesDropdown">
+    <form method="post" id="subjectsForm" class="float-left ml-5" subjects-drop-url="{% url 'ajax_load_dropdown' %}">
+        <select id="subjectNamesDropdown" class="selectpicker">
             <option>Select Subject</option>
         </select>
     </form>
 
-    <form method="post" id="chaptersForm" chapters-drop-url="{% url 'ajax_load_dropdown' %}">
-        <select id="chapterNamesDropDown">
-
+    <form method="post" id="chaptersForm" class="float-left ml-5" chapters-drop-url="{% url 'ajax_load_dropdown' %}">
+        <select id="chapterNamesDropDown" class="selectpicker" multiple>
+            <option>Select Subject</option>
         </select>
     </form>
+
+    </div>
+
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
