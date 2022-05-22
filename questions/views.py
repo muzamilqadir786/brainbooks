@@ -29,6 +29,9 @@ def generate_paper(request):
     return render(request,'questions/generate_paper.html', context)
 
 import ipdb
+from django.utils.safestring import mark_safe
+from django.utils.html import escape
+from html import unescape
 @csrf_exempt
 def load_dropdown_ajax(request):
     if request.method == 'POST':
@@ -49,7 +52,7 @@ def load_dropdown_ajax(request):
         if subject_id:
             subject = get_object_or_404(Subject, subject_id=subject_id)
             chapters = subject.chapter_set.all()
-            context['chapters'] = [{'name':str(chapter), 'chapter_id': chapter.chapter_id} for chapter in chapters]
+            context['chapters'] = [{'name':unescape(str(chapter)), 'chapter_id': chapter.chapter_id} for chapter in chapters]
 
         return JsonResponse({'context':context})
         # HttpResponse(classes)

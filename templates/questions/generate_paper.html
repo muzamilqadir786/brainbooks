@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-{{boards}}{{classes}}
 
     <form method="post" id="boardsForm" boards-drop-url="{% url 'ajax_load_dropdown' %}" >
 
         <select id="boardsDropdown">
+            <option>Select Board</option>
             {% for board in boards %}
                 <option id="{{board.id}}" value="{{board.id}}"> {{board}} </option>
             {% endfor %}
@@ -15,13 +15,13 @@
 
     <form method="post" id="classesForm" classes-drop-url="{% url 'ajax_load_dropdown'%}">
         <select id="classNamesDropdown">
-
+            <option>Select Class </option>
         </select>
     </form>
 
     <form method="post" id="subjectsForm" subjects-drop-url="{% url 'ajax_load_dropdown' %}">
         <select id="subjectNamesDropdown">
-
+            <option>Select Subject</option>
         </select>
     </form>
 
@@ -30,6 +30,7 @@
 
         </select>
     </form>
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script>
@@ -50,6 +51,7 @@
 //          $("#class-names").html(data);  // replace the contents of the city input with the data that came from the server
 //            console.log(data);
             $("#classNamesDropdown").empty();
+            $("#classNamesDropdown").append('<option> Select Class </option>');
             $.each(data.context.classes, function (i, item) {
 //                console.log(item);
                 $('#classNamesDropdown').append($('<option>', {
@@ -76,6 +78,7 @@
               success: function(data){
 //                console.log(data);
                   $("#subjectNamesDropdown").empty();
+                  $("#subjectNamesDropdown").append('<option> Select Subject </option>');
                   $.each(data.context.subjects, function(i, item){
 //                        console.log(item);
                         $("#subjectNamesDropdown").append($('<option>', {
@@ -106,6 +109,7 @@
 //                  alert(data);
                 console.log(data);
                   $("#chapterNamesDropDown").empty();
+                  $("#chapterNamesDropDown").append('<option> Select Chapter </option>');
                   $.each(data.context.chapters, function(i, item){
                         console.log(item);
                         $("#chapterNamesDropDown").append($('<option>', {
@@ -121,5 +125,5 @@
       });//change closed
 
   </script>
-</select>
+
 {% endblock %}
