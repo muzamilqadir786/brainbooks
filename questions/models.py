@@ -142,10 +142,6 @@ class Chapter(models.Model):
         ordering = ['id']
     @staticmethod
     def insert_data():
-        # from django.db import connection
-        # with connection.cursor() as cursor:
-        #     cursor.execute("ALTER TABLE brainbooks.questions_chapter MODIFY COLUMN title VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;")
-            # cursor.execute("ALTER TABLE brainbooks.questions_chapter MODIFY COLUMN subject VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;")
         url = 'https://brainbooks.pk/api/chapterjsonlistwithtopic'
         payload = {}
         subject_ids = Subject.objects.values('subject_id')

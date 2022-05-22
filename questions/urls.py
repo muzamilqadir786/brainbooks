@@ -3,4 +3,5 @@ from . import views
 urlpatterns = [
     path('', views.index, name='main-index'),
     path('generate_paper/', views.generate_paper, name='paper-generator'),
+    path('ajax/load-dropdown/', views.load_dropdown_ajax, name='ajax_load_dropdown'),
 ]
