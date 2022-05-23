@@ -26,7 +26,7 @@ class SubjectAdmin(admin.ModelAdmin):
 import ipdb
 @admin.register(Chapter)
 class ChapterAdmin(admin.ModelAdmin):
-    list_display = ['id', 'subject_id', 'board', 'class_name','__str__', 'get_subject', 'chapter', 'title', 'status']
+    list_display = ['id', 'subject_id', 'board', 'class_name','__str__', 'get_subject', 'chapter', 'chapter_id', 'title', 'status']
     def get_subject(self, obj):
         return obj.subject.name
     def class_name(self,obj):
