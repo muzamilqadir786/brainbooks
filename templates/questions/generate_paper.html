@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+{% block style%}
 
+{% endblock %}
 {% block content %}
     <div class="clearfix mt-5">
     <form method="post" id="boardsForm" class="float-left ml-5" boards-drop-url="{% url 'ajax_load_dropdown' %}" >
@@ -34,10 +36,10 @@
     </form>
 
     <form method="post" id="chaptersForm" class="float-left ml-5" chapters-drop-url="{% url 'ajax_load_dropdown' %}">
-        <div class="form-group">
+        <div class="form-group multiselect">
             <label for="demo_overview_minimal">Select Chapters</label>
             <select id="chapterNamesDropDown" class="form-control selectpicker" multiple>
-                <option>Select Subject</option>
+                <option>Select Chapter</option>
             </select>
         </div>
     </form>
@@ -97,7 +99,7 @@
 //                        console.log(item);
                         $("#subjectNamesDropdown").append($('<option>', {
                                     value: item.subject_id,
-                                    text: item.name
+                                    text: i + 1 + ') ' + item.name
 
                         })); //append closed
                   });

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Board, Class , Subject, Chapter#, SubjectClass, Unit, Question
+from .models import Board, Class, Subject, Chapter, Topic#, SubjectClass, Unit, Question
 # Register your models here.
 
 @admin.register(Board)
@@ -11,6 +11,10 @@ class ClassAdmin(admin.ModelAdmin):
     list_display = ['id','__str__', 'board_name','status','icon']
     def board_name(self,obj):
         return obj.board.__str__()
+    # def get_queryset(self, request):
+    #     queryset = super(ChapterAdmin, self).get_queryset(request).all(*args, **kwargs)
+    #     queryset = queryset.prefetch_related('subject').all()
+    #     return queryset
 
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
@@ -27,14 +31,36 @@ import ipdb
 @admin.register(Chapter)
 class ChapterAdmin(admin.ModelAdmin):
     list_display = ['id', 'subject_id', 'board', 'class_name','__str__', 'get_subject', 'chapter', 'chapter_id', 'title', 'status']
+    list_filter = ['subject_id','subject__name']
     def get_subject(self, obj):
         return obj.subject.name
     def class_name(self,obj):
         return obj.class_name
+
+    # def get_queryset(self, request):
+    #     queryset = super(ChapterAdmin, self).get_queryset(request)
+    #     queryset = queryset.prefetch_related('class').all()
+    #     return queryset
+    #     # ipdb.set_trace()
+        # if request.user.is_superuser:
+        #     return qs
+        # return qs.filter(author=request.user)
+
     get_subject.short_description = 'Subject Name'
     class_name.short_description = 'Class Name'
     # get_author.admin_order_field = 'book__author'
 
+@admin.register(Topic)
+class TopicAdmin(admin.ModelAdmin):
+    list_display = ['topic_id', 'subject_id', 'board', 'class_name','__str__', 'get_subject', 'get_chapter', 'topic', 'title', 'status']
+    # list_display = ['topic_id', 'subject_id', 'board', 'class_name', 'topic', 'title', 'status']
+    list_filter = ['subject_id','subject__name']
+    def get_subject(self, obj):
+        return obj.subject.name
+    def class_name(self,obj):
+        return obj.class_name
+    def get_chapter(self, obj):
+        return obj.chapter
 
 # @admin.register(SubjectClass)
 # class SubjectClassAdmin(admin.ModelAdmin):

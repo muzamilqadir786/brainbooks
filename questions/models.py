@@ -65,6 +65,12 @@ class Class(models.Model):
         verbose_name_plural = "Classes"
         unique_together = ['board','name']
 
+    def class_subjects(self):
+        return self.subject_set.all()
+
+    def get_queryset(self):
+        return self.subject_set.all()
+
     @staticmethod
     def insert_data():
         board_obj, created = Board.objects.get_or_create(name=PUNJAB)
@@ -137,6 +143,10 @@ class Chapter(models.Model):
     def __str__(self):
         return 'U-{} {}'.format(self.chapter, self.title)
 
+    def get_queryset(self):
+        return super().get_queryset().filter(class_name=self.class_name)
+        # return self.subject_set.all()
+
     class Meta:
         unique_together = ['chapter', 'chapter_id']
         ordering = ['id']
@@ -179,77 +189,114 @@ class Chapter(models.Model):
                         except Exception as e:
                             print(e)
 
+import ipdb
+class Topic(models.Model):
+    topic_id = models.PositiveSmallIntegerField(blank=True, null=True)
+    board = models.ForeignKey('Board', blank=True, null=True, on_delete=models.CASCADE)
+    class_name = models.ForeignKey('Class', blank=True, null=True, on_delete=models.CASCADE)
+    subject = models.ForeignKey('Subject', blank=True, null=True, on_delete=models.CASCADE)
+    chapter = models.ForeignKey('Chapter', blank=True, null=True, on_delete=models.CASCADE)
+    topic = models.CharField(max_length=10,blank=True, null=True)
+    title = models.CharField(max_length=300, blank=True, null=True)
+    status = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        unique_together = ['topic_id','title']
+        ordering = ['subject_id','topic']
+
+    @staticmethod
+    def insert_data():
+        url = 'https://brainbooks.pk/api/chapterjsonlistwithtopic'
+        payload = {}
+        subject_ids = Subject.objects.values('subject_id')
+        for subject_id in subject_ids:
+            # import ipdb
+            # ipdb.set_trace()
+            payload['subject_id'] = subject_id['subject_id']
+            payload['question_status'] = 2
+            response = requests.get(url, params=payload)
+            if response.status_code == 200:
+                json_data = json.loads(response.text)
+                if json_data.get('data'):
+                    for data in json_data['data']:
+                        topic = Topic()
+                        # board_id, class_name_id, subject_id, chapter_id
+                        if data.get('board_id'):
+                            board_obj, created = Board.objects.get_or_create(id=data['board_id'])
+                            topic.board = board_obj
+                        if data.get('class_id'):
+                            class_obj, created = Class.objects.get_or_create(id=data['class_id'])
+                            topic.class_name = class_obj
+                        if data.get('subject_id'):
+                            subject_obj, created = Subject.objects.get_or_create(subject_id=data['subject_id'])
+                            topic.subject = subject_obj
+                        if data.get('chapter_id'):
+                            chapter_obj, created = Chapter.objects.get_or_create(chapter=data['ch_id'])
+                            topic.chapter = chapter_obj
+
+                        # ipdb.set_trace()
+                        if data.get('topics'):
+                            topics = data['topics']
+                            for tp in topics:
+                                if tp.get('topic_id'):
+                                    topic.topic_id = int(tp['topic_id'])
+                                if tp.get('topic'):
+                                    topic.topic = tp['topic']
+                                if tp.get('title'):
+                                    topic.title = tp['title']
+
+                                try:
+                                    topic.save()
+                                    print("Created successfully")
+                                except Exception as e:
+                                    print("Already exists")
+                                    print(e)
+
+
+                        # try:
+                        #     chapter.save()
+                        # except Exception as e:
+                        #     print(e)
 
 
 
-
-
-
-
-
-                    # import ipdb
-                    # ipdb.set_trace()
-
-#
-# class SubjectClass(models.Model):
-#     subject_class = models.ForeignKey('Class', on_delete=models.CASCADE, verbose_name='Class', blank=True, null=True)
-#     subject_name = models.ForeignKey('Subject', on_delete=models.CASCADE, blank=True, null=True)
-#     class Meta:
-#         verbose_name_plural = 'Class Subjects'
-#         unique_together = ['subject_class', 'subject_name']
-#
-#     def __str__(self):
-#         return '{} {}'.format(self.subject_name.subject, self.subject_class)
-#
-# class Unit(models.Model):
-#     unit_subject = models.ForeignKey('Subject', on_delete=models.CASCADE, blank=True, null=True)
-#     unit_class = models.ForeignKey('Class', on_delete=models.CASCADE, blank=True, null=True)
-#
-#     unit_number = models.CharField(
-#         choices = [(str(x), 'UNIT-{}'.format(x)) for x in list(range(1,31))],
-#         max_length = 3,
-#         verbose_name = 'Unit Number',
-#     )
-#
-#     unit_name = models.CharField(
-#         max_length=100,
-#         unique = True,
-#         verbose_name = 'Unit Name',
-#     )
-#
-#     def get_unit_subjects(self):
-#         return Unit.objects.get(id=self.id).unit_subject
-#
-#     class Meta:
-#         unique_together = ['unit_subject', 'unit_number']
-#
-#     def __str__(self):
-#         return 'UNIT-{} {}-'.format(self.unit_number, self.unit_name)
-#
-#     # objects = models.Manager()
-#
 # QUESTION_TYPES = (
 #     (1, 'MCQ'),
 #     (2, 'Short Question'),
 #     (3, 'Long Question'),
 # )
 #
+# OPTION_A = 1
+# OPTION_B = 2
+# OPTION_C = 3
+# OPTION_D = 4
+#
+# ANSWER_OPTIONS=(
+#     (OPTION_A,'Option1'),
+#     (OPTION_B,'Option2'),
+#     (OPTION_C,'Option3'),
+#     (OPTION_D,'Option4')
+# )
 #
 # class Question(models.Model):
-#     unit=models.ForeignKey('Unit',on_delete=models.CASCADE)
+#     chapter=models.ForeignKey('Chapter',on_delete=models.CASCADE, blank=True, null=True)
 #     marks=models.PositiveIntegerField()
-#     question=models.CharField(max_length=600)
-#     option1=models.CharField(max_length=200)
-#     option2=models.CharField(max_length=200)
-#     option3=models.CharField(max_length=200)
-#     option4=models.CharField(max_length=200)
-#     cat=(('Option1','Option1'),('Option2','Option2'),('Option3','Option3'),('Option4','Option4'))
-#     answer=models.CharField(max_length=200,choices=cat)
+#     question=models.CharField(max_length=600, blank=True, null=True)
+#     option1=models.CharField(max_length=200, blank=True, null=True)
+#     option2=models.CharField(max_length=200, blank=True, null=True)
+#     option3=models.CharField(max_length=200, blank=True, null=True)
+#     option4=models.CharField(max_length=200, blank=True, null=True)
+#
+#     answer=models.CharField(max_length=200,choices=ANSWER_OPTIONS)
 #     created_on = models.DateTimeField(auto_now_add = True)
 #     updated_on = models.DateTimeField(auto_now = True)
+#     status = models.BooleanField(default=True)
 #
 #     def get_questions_by_unit(self, *args, **kwargs):
-#         unit = Unit.objects.get(unit_number=kwargs['unit_number'])
+#         unit = Chapter.objects.get(unit_number=kwargs['unit_number'])
 #         questions = Question.objects.filter(unit=unit.unit_name)
 #
 #     def __str__(self):
