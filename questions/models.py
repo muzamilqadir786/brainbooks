@@ -101,35 +101,6 @@ class Subject(models.Model):
     def __str__(self):
         return self.name
 
-    @staticmethod
-    def insert_data():
-        url = 'https://brainbooks.pk/api/subjectsjsonlist'
-        payload = {}
-        for each_class in range(1, 5):
-            payload['class_id'] = each_class
-            response = requests.post(url, data=payload)
-            if response.status_code == 200:
-                json_data = json.loads(response.text)
-                for data in json_data['data']:
-                    subject = Subject()
-                    if data.get('subject_id'):
-                        subject.subject_id = data['subject_id']
-                    if data.get('board_id'):
-                        board_obj, created = Board.objects.get_or_create(id=data['board_id'])
-                        subject.board = board_obj
-                    if data.get('class_id'):
-                        class_id = data['class_id']
-                        class_obj, created = Class.objects.get_or_create(name=class_id)
-                        subject.class_name = class_obj
-                    if data.get('subject'):
-                        subject.name = data['subject']
-                    if data.get('total_type_questions'):
-                        subject.total_type_questions = data['total_type_questions']
-                    try:
-                        subject.save()
-                    except Exception as e:
-                        print(e)
-
 
 class Chapter(models.Model):
     chapter_id = models.PositiveSmallIntegerField(blank=True, null=True)

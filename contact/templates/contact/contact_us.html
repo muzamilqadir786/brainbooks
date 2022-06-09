@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block stylesheets %} <link rel="stylesheet" type="text/css" href="{% static 'contact/css/contact.css' %}"> {% endblock %}
+
+{%block content %}
+<form action="" method="post">
+   {% csrf_token %}
+   {{ form }}
+   <input type="submit" value="Submit">
+</form>
+
+{% endblock %}

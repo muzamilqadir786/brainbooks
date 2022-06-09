@@ -17,11 +17,18 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic.base import TemplateView
+from contact.views import contact_view
 
 urlpatterns = [
     # path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
-    path('', include('questions.urls')),
+    path('contact/', contact_view, name='contact_us'),
+    path('accounts/', include('accounts.urls', namespace="accounts")),
+    path('questions/', include('questions.urls')),
+    #Two pages User Policies and About Us are created via Django Flatpages.
+    path('pages/', include('django.contrib.flatpages.urls')),
+    path('', TemplateView.as_view(template_name='home.html'), name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 from django.conf import settings

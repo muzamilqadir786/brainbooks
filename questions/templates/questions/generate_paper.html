@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+{% block style %}
+
+{% endblock %}
+{% block content %}
+    <div class="clearfix mt-5">
+    <form method="post" id="boardsForm" class="float-left ml-5" boards-drop-url="{% url 'ajax_load_dropdown' %}" >
+        <div class="form-group">
+            <label for="demo_overview_minimal">Select Board</label>
+            <select id="boardsDropdown" class="form-control selectpicker">
+                <option>Select Board</option>
+                {% for board in boards %}
+                    <option id="{{board.id}}" value="{{board.id}}"> {{board}} </option>
+                {% endfor %}
+
+            </select>
+        </div>
+    </form>
+
+    <form method="post" id="classesForm" class="float-left ml-5" classes-drop-url="{% url 'ajax_load_dropdown'%}">
+        <div class="form-group">
+            <label for="demo_overview_minimal">Select Class</label>
+            <select id="classNamesDropdown" class="form-control selectpicker">
+                <option>Select Class </option>
+            </select>
+        </div>
+    </form>
+
+    <form method="post" id="subjectsForm" class="float-left ml-5" subjects-drop-url="{% url 'ajax_load_dropdown' %}">
+        <div class="form-group">
+            <label for="demo_overview_minimal">Select Subject</label>
+            <select id="subjectNamesDropdown" class="form-control selectpicker">
+                <option>Select Subject</option>
+            </select>
+        </div>
+    </form>
+
+    <form method="post" id="chaptersForm" class="float-left ml-5" chapters-drop-url="{% url 'ajax_load_dropdown' %}">
+        <div class="form-group multiselect">
+            <label for="demo_overview_minimal">Select Chapters</label>
+            <select id="chapterNamesDropDown" class="form-control selectpicker" multiple>
+                <option>Select Chapter</option>
+            </select>
+        </div>
+    </form>
+
+    </div>
+{% endblock %}
+    {% block js %}
+        <script src="{% static 'js/ajax-data-loader.js' %}" type="text/javascript"></script>
+    {% endblock %}
+

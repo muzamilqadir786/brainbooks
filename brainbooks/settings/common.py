@@ -39,15 +39,21 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.flatpages',
+    'django.contrib.sites',
     "django.forms",
 ]
+
+SITE_ID = 2
 
 THIRD_PARTY_APPS = [
 
 ]
 
 LOCAL_APPS = [
-    'questions',
+    'accounts.apps.AccountsConfig',
+    'contact.apps.ContactConfig',
+    'questions.apps.QuestionsConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -64,10 +70,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'brainbooks.urls'
 
+# + [BASE_DIR / app for app in LOCAL_APPS],
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'templates'] + [BASE_DIR / app for app in LOCAL_APPS],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,3 +137,6 @@ MEDIA_URL = 'media/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+LOGIN_URL='/accounts/login'
+LOGIN_REDIRECT_URL='/home/'
