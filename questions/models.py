@@ -26,6 +26,7 @@ class Board(models.Model):
 
     def __str__(self):
         return dict(BOARD_CHOICES)[int(self.name)]
+
     @staticmethod
     def insert_data():
         for board in dict(BOARD_CHOICES).keys():
@@ -112,7 +113,7 @@ class Chapter(models.Model):
     status = models.BooleanField(default=True)
 
     def __str__(self):
-        return 'U-{} {}'.format(self.chapter, self.title)
+        return f'U-{self.chapter} {self.title}'
 
     def get_queryset(self):
         return super().get_queryset().filter(class_name=self.class_name)
@@ -121,44 +122,8 @@ class Chapter(models.Model):
     class Meta:
         unique_together = ['chapter', 'chapter_id']
         ordering = ['id']
-    @staticmethod
-    def insert_data():
-        url = 'https://brainbooks.pk/api/chapterjsonlistwithtopic'
-        payload = {}
-        subject_ids = Subject.objects.values('subject_id')
-        for subject_id in subject_ids:
-            # import ipdb
-            # ipdb.set_trace()
-            payload['subject_id'] = subject_id['subject_id']
-            payload['question_status'] = 2
-            response = requests.get(url, params=payload)
-            if response.status_code == 200:
-                json_data = json.loads(response.text)
-                if json_data.get('data'):
-                    for data in json_data['data']:
-                        chapter = Chapter()
-                        if data.get('ch_id'):
-                            chapter.chapter_id = data['ch_id']
-                        if data.get('subject_id'):
-                            subject_obj, created = Subject.objects.get_or_create(subject_id=data['subject_id'])
-                            chapter.subject = subject_obj
-                        if data.get('board_id'):
-                            board_obj, created = Board.objects.get_or_create(id=data['board_id'])
-                            chapter.board = board_obj
-                            chapter.board_id = data['board_id']
-                        if data.get('class_id'):
-                            # chapter.class_name_id = data['class_id']
-                            class_id = data['class_id']
-                            class_obj, created = Class.objects.get_or_create(name=class_id)
-                            chapter.class_name = class_obj
-                        if data.get('chapter'):
-                            chapter.chapter = int(data['chapter'])
-                        if data.get('title'):
-                            chapter.title = data['title']
-                        try:
-                            chapter.save()
-                        except Exception as e:
-                            print(e)
+        
+
 
 import ipdb
 class Topic(models.Model):
@@ -178,100 +143,48 @@ class Topic(models.Model):
         unique_together = ['topic_id','title']
         ordering = ['subject_id','topic']
 
-    @staticmethod
-    def insert_data():
-        url = 'https://brainbooks.pk/api/chapterjsonlistwithtopic'
-        headers={
-            "User-Agent" : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
-        }
-        payload = {}
-        subject_ids = Subject.objects.values('subject_id')
-        for subject_id in subject_ids[::-1]:
-            # import ipdb
-            # ipdb.set_trace()
-            payload['subject_id'] = subject_id['subject_id']
-            payload['question_status'] = 2
-            response = requests.get(url, params=payload, headers=headers)
-            if response.status_code == 200:
-                json_data = json.loads(response.text)
-                if json_data.get('data'):
-                    for data in json_data['data']:
-                        topic = Topic()
-                        # board_id, class_name_id, subject_id, chapter_id
-                        if data.get('board_id'):
-                            board_obj, created = Board.objects.get_or_create(id=data['board_id'])
-                            topic.board = board_obj
-                        if data.get('class_id'):
-                            class_obj, created = Class.objects.get_or_create(id=data['class_id'])
-                            topic.class_name = class_obj
-                        if data.get('subject_id'):
-                            subject_obj, created = Subject.objects.get_or_create(subject_id=data['subject_id'])
-                            topic.subject = subject_obj
-                        if data.get('chapter_id'):
-                            chapter_obj, created = Chapter.objects.get_or_create(chapter=data['ch_id'])
-                            topic.chapter = chapter_obj
+QUESTION_TYPES = (
+    (1, 'MCQ'),
+    (2, 'Short Question'),
+    (3, 'Long Question'),
+)
 
-                        # ipdb.set_trace()
-                        if data.get('topics'):
-                            topics = data['topics']
-                            for tp in topics:
-                                if tp.get('topic_id'):
-                                    topic.topic_id = int(tp['topic_id'])
-                                if tp.get('topic'):
-                                    topic.topic = tp['topic']
-                                if tp.get('title'):
-                                    topic.title = tp['title']
+OPTION_A = 1
+OPTION_B = 2
+OPTION_C = 3
+OPTION_D = 4
 
-                                try:
-                                    topic.save()
-                                    print("Created successfully")
-                                except Exception as e:
-                                    print("Already exists")
-                                    print(e)
+ANSWER_OPTIONS=(
+    (OPTION_A,'Option1'),
+    (OPTION_B,'Option2'),
+    (OPTION_C,'Option3'),
+    (OPTION_D,'Option4')
+)
+
+class Question(models.Model):
+    board = models.ForeignKey('Board', blank=True, null=True, on_delete=models.CASCADE)
+    class_name = models.ForeignKey('Class', blank=True, null=True, on_delete=models.CASCADE)
+    subject = models.ForeignKey('Subject', blank=True, null=True, on_delete=models.CASCADE)
+    chapter = models.ForeignKey('Chapter', blank=True, null=True, on_delete=models.CASCADE)
+    topic = models.ForeignKey('Topic', blank=True, null=True, on_delete=models.CASCADE)
+
+    type = models.PositiveSmallIntegerField(choices=QUESTION_TYPES, blank=True, null=True)
+    marks=models.PositiveSmallIntegerField()
+    question=models.CharField(max_length=600, blank=True, null=True)
+    option1=models.CharField(max_length=200, blank=True, null=True)
+    option2=models.CharField(max_length=200, blank=True, null=True)
+    option3=models.CharField(max_length=200, blank=True, null=True)
+    option4=models.CharField(max_length=200, blank=True, null=True)
+
+    answer = models.PositiveSmallIntegerField(choices=ANSWER_OPTIONS, blank=True, null=True)
+    created_on = models.DateTimeField(auto_now_add = True)
+    updated_on = models.DateTimeField(auto_now = True)
+    status = models.BooleanField(default=True)
+
+    def get_questions_by_unit(self, *args, **kwargs):
+        unit = Chapter.objects.get(unit_number=kwargs['unit_number'])
+        questions = unit.question_set.all()
 
 
-                        # try:
-                        #     chapter.save()
-                        # except Exception as e:
-                        #     print(e)
-
-
-
-# QUESTION_TYPES = (
-#     (1, 'MCQ'),
-#     (2, 'Short Question'),
-#     (3, 'Long Question'),
-# )
-#
-# OPTION_A = 1
-# OPTION_B = 2
-# OPTION_C = 3
-# OPTION_D = 4
-#
-# ANSWER_OPTIONS=(
-#     (OPTION_A,'Option1'),
-#     (OPTION_B,'Option2'),
-#     (OPTION_C,'Option3'),
-#     (OPTION_D,'Option4')
-# )
-#
-# class Question(models.Model):
-#     chapter=models.ForeignKey('Chapter',on_delete=models.CASCADE, blank=True, null=True)
-#     marks=models.PositiveIntegerField()
-#     question=models.CharField(max_length=600, blank=True, null=True)
-#     option1=models.CharField(max_length=200, blank=True, null=True)
-#     option2=models.CharField(max_length=200, blank=True, null=True)
-#     option3=models.CharField(max_length=200, blank=True, null=True)
-#     option4=models.CharField(max_length=200, blank=True, null=True)
-#
-#     answer=models.CharField(max_length=200,choices=ANSWER_OPTIONS)
-#     created_on = models.DateTimeField(auto_now_add = True)
-#     updated_on = models.DateTimeField(auto_now = True)
-#     status = models.BooleanField(default=True)
-#
-#     def get_questions_by_unit(self, *args, **kwargs):
-#         unit = Chapter.objects.get(unit_number=kwargs['unit_number'])
-#         questions = Question.objects.filter(unit=unit.unit_name)
-#
-#     def __str__(self):
-#         return self.question
+    def __str__(self):
+        return self.question

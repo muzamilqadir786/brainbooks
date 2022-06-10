@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Board, Class, Subject, Chapter, Topic#, SubjectClass, Unit, Question
+from .models import Board, Class, Subject, Chapter, Topic, Question
 # Register your models here.
 
 @admin.register(Board)
@@ -52,15 +52,19 @@ class ChapterAdmin(admin.ModelAdmin):
 
 @admin.register(Topic)
 class TopicAdmin(admin.ModelAdmin):
-    list_display = ['topic_id', 'subject_id', 'board', 'class_name','__str__', 'get_subject', 'get_chapter', 'topic', 'title', 'status']
+    list_display = ['topic_id', 'subject_id', 'board', 'class_name', 'subject', 'chapter', 'title', 'topic',  'status']
     # list_display = ['topic_id', 'subject_id', 'board', 'class_name', 'topic', 'title', 'status']
     list_filter = ['subject_id','subject__name']
-    def get_subject(self, obj):
-        return obj.subject.name
+    search_fields = ['topic_id', 'subject__name']
+
+    def subject(self, obj):
+        return obj.subject.__str__()
+
     def class_name(self,obj):
         return obj.class_name
-    def get_chapter(self, obj):
-        return obj.chapter
+
+    def chapter(self, obj):
+        return obj.chapter.__str__()
 
 # @admin.register(SubjectClass)
 # class SubjectClassAdmin(admin.ModelAdmin):
@@ -74,10 +78,19 @@ class TopicAdmin(admin.ModelAdmin):
 #     search_fields=['unit_number','unit_name']
 #     # def unit_class(self, obj,):
 #
-# @admin.register(Question)
-# class QuestionAdmin(admin.ModelAdmin):
-#     list_display = [field.name for field in Question._meta.get_fields()]
 
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Question._meta.get_fields()]
+    list_display = ['topic_id', 'board','__str__', 'subject', 'chapter', 'topic', 'type','option1', 'option2', 'option3', 'option4', 'answer']
+    # list_display = ['topic_id', 'subject_id', 'board', 'class_name', 'topic', 'title', 'status']
+    list_filter = ['subject_id','subject__name']
+    def subject(self, obj):
+        return obj.subject.__str__()
+    def chapter(self, obj):
+        return obj.chapter.__str__()
+    def topic(self, obj):
+        return obj.topic.__str__()
 
 admin.site.site_header = "Question Bank Administration"
 admin.site.site_title = "QUESTION BANK"
