@@ -181,14 +181,17 @@ class Topic(models.Model):
     @staticmethod
     def insert_data():
         url = 'https://brainbooks.pk/api/chapterjsonlistwithtopic'
+        headers={
+            "User-Agent" : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
+        }
         payload = {}
         subject_ids = Subject.objects.values('subject_id')
-        for subject_id in subject_ids:
+        for subject_id in subject_ids[::-1]:
             # import ipdb
             # ipdb.set_trace()
             payload['subject_id'] = subject_id['subject_id']
             payload['question_status'] = 2
-            response = requests.get(url, params=payload)
+            response = requests.get(url, params=payload, headers=headers)
             if response.status_code == 200:
                 json_data = json.loads(response.text)
                 if json_data.get('data'):
