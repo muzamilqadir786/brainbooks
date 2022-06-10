@@ -2,6 +2,7 @@ import json
 import requests
 from django.core.management.base import BaseCommand, CommandError
 from questions.models import Board, Class, Subject, Chapter, Topic
+from questions.choices import BOARD_CHOICES, CLASS_CHOICES, PUNJAB
 
 class Command(BaseCommand):
     help = 'Inserts the relevant models data scraped from brainbooks.pk'
@@ -31,6 +32,23 @@ def insert_data(*args):
 
         except requests.exceptions.RequestException as e:  # This is the correct syntax
             raise SystemExit(e)
+
+    if 'boards' in args:
+        for board in dict(BOARD_CHOICES).keys():
+            board_obj, created = Board.objects.get_or_create(name=board,id=board)
+            if created:
+                print("Created board with id:{}".format(board))
+            else:
+                print("Board already exists")
+
+    if 'classes' in args:
+        board_obj, created = Board.objects.get_or_create(name=PUNJAB)
+        for key,value in dict(CLASS_CHOICES).items():
+            obj, created = Class.objects.get_or_create(name=key,board=board_obj,id=key)
+            if created:
+                print("Class Object created with class {} created successfully.".format(key))
+            else:
+                print("Class Object already exists")
 
     if 'subjects' in args:
         url = 'https://brainbooks.pk/api/subjectsjsonlist'

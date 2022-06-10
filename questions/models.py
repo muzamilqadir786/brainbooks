@@ -3,17 +3,9 @@ import json
 import requests
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-# Create your models here.
-PUNJAB = 1
-SINDH = 2
-KHYBER_PAKHTUNKHWA = 3
-BLOCHISTAN = 4
-BOARD_CHOICES = [
-    (PUNJAB, 'Punjab'),
-    (SINDH, 'Sindh'),
-    (KHYBER_PAKHTUNKHWA, 'Khyber Pakhtunkhwa'),
-    (BLOCHISTAN, 'Balochistan'),
-]
+
+from .choices import BOARD_CHOICES, CLASS_CHOICES, QUESTION_TYPES, ANSWER_OPTIONS
+
 class Board(models.Model):
     name = models.CharField(
         max_length=1,
@@ -27,33 +19,12 @@ class Board(models.Model):
     def __str__(self):
         return dict(BOARD_CHOICES)[int(self.name)]
 
-    @staticmethod
-    def insert_data():
-        for board in dict(BOARD_CHOICES).keys():
-            # import ipdb
-            # ipdb.set_trace()
-            board_obj, created = Board.objects.get_or_create(name=board,id=board)
-            if created:
-                print("Created board with id:{}".format(board))
-            else:
-                print("Board already exists")
-#Only change to push
-NINTH = 1
-TENTH = 2
-FIRST_YEAR = 3
-SECOND_YEAR = 4
-CLASS_CHOICES = [
-    (NINTH, 'Class-9'),
-    (TENTH, 'Class-10'),
-    (FIRST_YEAR, 'Inter Part-I'),
-    (SECOND_YEAR, 'Inter Part-II'),
-]
+
 
 class Class(models.Model):
     board = models.ForeignKey('Board', blank=True, null=True, on_delete=models.CASCADE)
     name = models.PositiveSmallIntegerField(
         choices=CLASS_CHOICES,
-        # db_column = 'class',
     )
 
     status = models.BooleanField(default=True)
@@ -72,15 +43,7 @@ class Class(models.Model):
     def get_queryset(self):
         return self.subject_set.all()
 
-    @staticmethod
-    def insert_data():
-        board_obj, created = Board.objects.get_or_create(name=PUNJAB)
-        for key,value in dict(CLASS_CHOICES).items():
-            obj, created = Class.objects.get_or_create(name=key,board=board_obj,id=key)
-            if created:
-                print("Class Object created with class {} created successfully.".format(key))
-            else:
-                print("Class Object already exists")
+
 
 class Subject(models.Model):
     subject_id = models.PositiveIntegerField(blank=True, null=True)
@@ -143,23 +106,7 @@ class Topic(models.Model):
         unique_together = ['topic_id','title']
         ordering = ['subject_id','topic']
 
-QUESTION_TYPES = (
-    (1, 'MCQ'),
-    (2, 'Short Question'),
-    (3, 'Long Question'),
-)
 
-OPTION_A = 1
-OPTION_B = 2
-OPTION_C = 3
-OPTION_D = 4
-
-ANSWER_OPTIONS=(
-    (OPTION_A,'Option1'),
-    (OPTION_B,'Option2'),
-    (OPTION_C,'Option3'),
-    (OPTION_D,'Option4')
-)
 
 class Question(models.Model):
     board = models.ForeignKey('Board', blank=True, null=True, on_delete=models.CASCADE)
