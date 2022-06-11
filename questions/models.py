@@ -95,7 +95,7 @@ class Topic(models.Model):
     class_name = models.ForeignKey('Class', blank=True, null=True, on_delete=models.CASCADE)
     subject = models.ForeignKey('Subject', blank=True, null=True, on_delete=models.CASCADE)
     chapter = models.ForeignKey('Chapter', blank=True, null=True, on_delete=models.CASCADE)
-    topic = models.CharField(max_length=10,blank=True, null=True)
+    topic = models.FloatField(blank=True, null=True)
     title = models.CharField(max_length=300, blank=True, null=True)
     status = models.BooleanField(default=True)
 
