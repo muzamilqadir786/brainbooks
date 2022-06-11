@@ -13,14 +13,13 @@ def home(request):
     return render(request,'questions/home.html')
 
 def free_mcqs_test(request):
-    pass
+    return render(request, 'questions/free_mcqs_test_page.html')
 
 def past_papers(request):
-    pass
+    return render(request, 'questions/past_papers_page.html')
 
 @login_required()
 def generate_paper(request):
-    # ipdb.set_trace()
     context = {}
     context['boards'], context['classes'] = Board.objects.all(), Class.objects.all()
     context['subjects'], context['chapter']  =  Subject.objects.all(), Chapter.objects.all()
@@ -50,8 +49,12 @@ def load_dropdown_ajax(request):
         if subject_id:
             subject = get_object_or_404(Subject, subject_id=subject_id)
             chapters = subject.chapter_set.all()
-            context['chapters'] = [{'name':unescape(str(chapter)), 'chapter_id': chapter.chapter_id} for chapter in chapters]
+            # chapters_topics = [chapter.topic_set.all() for chapter in chapters]
+            context['chapters'] = [{'name':unescape(str(chapter)),
+                                    'chapter_id': chapter.chapter_id} for chapter in chapters]
 
+
+                                    # 'chapter_topics': chapter.topic_set.all()
         return JsonResponse({'context':context})
         # HttpResponse(classes)
     # ipdb.set_trace()

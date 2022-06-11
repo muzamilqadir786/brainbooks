@@ -1,16 +1,36 @@
 from django.test import TestCase, SimpleTestCase
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 
-# Create your tests here.
 import ipdb
-class TestCalls(SimpleTestCase):
-    # databases = '__all__'
+class QuestionViewsTestCalls(TestCase):
+    fixtuers = ['boards.json', 'subjects.json', 'chapters.json', 'topics.json']
+
+    def setUp(self):
+        self.user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+
     def test_call_view_home(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
-    #
+
+    def test_call_generate_paper(self):
+        self.client.login(username='john', password='johnpassword')
+        response = self.client.get('/questions/generate-paper/')
+        self.assertEqual(response.status_code, 200)
+        ipdb.set_trace()
+
+    def test_call_view_free_mcqs_test(self):
+        response = self.client.get('/questions/free-mcqs/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_call_view_past_papers(self):
+        response = self.client.get('/questions/past-papers/')
+        self.assertEqual(response.status_code, 200)
+
+
+
     # def test_call_view_past_papers(self):
     #     response = self.client.get(reverse('past_papers'))
     #     self.assertEqual(response.status_code, 200)

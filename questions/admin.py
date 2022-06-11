@@ -66,18 +66,6 @@ class TopicAdmin(admin.ModelAdmin):
     def chapter(self, obj):
         return obj.chapter.__str__()
 
-# @admin.register(SubjectClass)
-# class SubjectClassAdmin(admin.ModelAdmin):
-#     list_display = ['subject_class', 'subject_name']
-#
-# @admin.register(Unit)
-# class UnitAdmin(admin.ModelAdmin):
-#     # list_display = [str(field.name) for field in Unit._meta.get_fields()]
-#     list_display=['unit_number','unit_name','get_unit_subjects']
-#     list_filter=['unit_name', 'unit_number']
-#     search_fields=['unit_number','unit_name']
-#     # def unit_class(self, obj,):
-#
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
@@ -97,9 +85,4 @@ admin.site.site_title = "QUESTION BANK"
 admin.site.index_title = "Welcome To: A Complete Academic Solution"
 
 
-# admin.site.register(Board, BoardAdmin)
-# admin.site.register(Class, ClassAdmin)
-# admin.site.register(Subject, SubjectAdmin)
-# admin.site.register(SubjectClass, SubjectClassAdmin)
-# admin.site.register(Unit, UnitAdmin)
-# admin.site.register(Question, QuestionAdmin)
+

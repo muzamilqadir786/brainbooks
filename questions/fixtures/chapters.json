@@ -1,0 +1,132 @@
+[
+{
+    "model": "questions.chapter",
+    "pk": 1,
+    "fields": {
+        "chapter_id": 1014,
+        "board": 1,
+        "class_name": 1,
+        "subject": 1,
+        "chapter": 1,
+        "title": ": حصہ نثر\r\n",
+        "status": true
+    }
+},
+{
+    "model": "questions.chapter",
+    "pk": 2,
+    "fields": {
+        "chapter_id": 1015,
+        "board": 1,
+        "class_name": 1,
+        "subject": 1,
+        "chapter": 2,
+        "title": " : حصہ نظم\r\n",
+        "status": true
+    }
+},
+{
+    "model": "questions.chapter",
+    "pk": 3,
+    "fields": {
+        "chapter_id": 1016,
+        "board": 1,
+        "class_name": 1,
+        "subject": 1,
+        "chapter": 3,
+        "title": ": حصہ غزل\r\n",
+        "status": true
+    }
+},
+{
+    "model": "questions.chapter",
+    "pk": 4,
+    "fields": {
+        "chapter_id": 561,
+        "board": 1,
+        "class_name": 1,
+        "subject": 1,
+        "chapter": 4,
+        "title": ": حصہ گرامر\r\n",
+        "status": true
+    }
+},
+{
+    "model": "questions.chapter",
+    "pk": 5,
+    "fields": {
+        "chapter_id": 1142,
+        "board": 1,
+        "class_name": 1,
+        "subject": 1,
+        "chapter": 5,
+        "title": "خطوط\r\n",
+        "status": true
+    }
+},
+{
+    "model": "questions.chapter",
+    "pk": 6,
+    "fields": {
+        "chapter_id": 1143,
+        "board": 1,
+        "class_name": 1,
+        "subject": 1,
+        "chapter": 6,
+        "title": "درخواستیں\r\n",
+        "status": true
+    }
+},
+{
+    "model": "questions.chapter",
+    "pk": 7,
+    "fields": {
+        "chapter_id": 1144,
+        "board": 1,
+        "class_name": 1,
+        "subject": 1,
+        "chapter": 7,
+        "title": "کہانی\r\n",
+        "status": true
+    }
+},
+{
+    "model": "questions.chapter",
+    "pk": 8,
+    "fields": {
+        "chapter_id": 1145,
+        "board": 1,
+        "class_name": 1,
+        "subject": 1,
+        "chapter": 8,
+        "title": "مکالمہ\r\n",
+        "status": true
+    }
+},
+{
+    "model": "questions.chapter",
+    "pk": 9,
+    "fields": {
+        "chapter_id": 172,
+        "board": 1,
+        "class_name": 1,
+        "subject": 2,
+        "chapter": 1,
+        "title": "The Saviour of Mankind\r\n",
+        "status": true
+    }
+},
+{
+    "model": "questions.chapter",
+    "pk": 10,
+    "fields": {
+        "chapter_id": 173,
+        "board": 1,
+        "class_name": 1,
+        "subject": 2,
+        "chapter": 2,
+        "title": "Patriotism",
+        "status": true
+    }
+}
+]

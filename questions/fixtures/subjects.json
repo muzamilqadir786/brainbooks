@@ -1,0 +1,132 @@
+[
+{
+    "model": "questions.subject",
+    "pk": 1,
+    "fields": {
+        "subject_id": 32,
+        "board": 1,
+        "class_name": 1,
+        "name": "Urdu-9",
+        "total_type_questions": 15,
+        "status": true,
+        "icon": ""
+    }
+},
+{
+    "model": "questions.subject",
+    "pk": 2,
+    "fields": {
+        "subject_id": 29,
+        "board": 1,
+        "class_name": 1,
+        "name": "English-9",
+        "total_type_questions": 10,
+        "status": true,
+        "icon": ""
+    }
+},
+{
+    "model": "questions.subject",
+    "pk": 3,
+    "fields": {
+        "subject_id": 33,
+        "board": 1,
+        "class_name": 1,
+        "name": "Islamiyat-9 (C)",
+        "total_type_questions": 10,
+        "status": true,
+        "icon": ""
+    }
+},
+{
+    "model": "questions.subject",
+    "pk": 4,
+    "fields": {
+        "subject_id": 34,
+        "board": 1,
+        "class_name": 1,
+        "name": "Pak Studies-9",
+        "total_type_questions": 10,
+        "status": true,
+        "icon": ""
+    }
+},
+{
+    "model": "questions.subject",
+    "pk": 5,
+    "fields": {
+        "subject_id": 1,
+        "board": 1,
+        "class_name": 1,
+        "name": "Physics-9",
+        "total_type_questions": 18,
+        "status": true,
+        "icon": ""
+    }
+},
+{
+    "model": "questions.subject",
+    "pk": 6,
+    "fields": {
+        "subject_id": 8,
+        "board": 1,
+        "class_name": 1,
+        "name": "Chemistry-9",
+        "total_type_questions": 10,
+        "status": true,
+        "icon": ""
+    }
+},
+{
+    "model": "questions.subject",
+    "pk": 7,
+    "fields": {
+        "subject_id": 9,
+        "board": 1,
+        "class_name": 1,
+        "name": "Biology-9",
+        "total_type_questions": 10,
+        "status": true,
+        "icon": ""
+    }
+},
+{
+    "model": "questions.subject",
+    "pk": 8,
+    "fields": {
+        "subject_id": 30,
+        "board": 1,
+        "class_name": 1,
+        "name": "Maths-9",
+        "total_type_questions": 10,
+        "status": true,
+        "icon": ""
+    }
+},
+{
+    "model": "questions.subject",
+    "pk": 9,
+    "fields": {
+        "subject_id": 36,
+        "board": 1,
+        "class_name": 1,
+        "name": "Computer-9",
+        "total_type_questions": 10,
+        "status": true,
+        "icon": ""
+    }
+},
+{
+    "model": "questions.subject",
+    "pk": 10,
+    "fields": {
+        "subject_id": 31,
+        "board": 1,
+        "class_name": 1,
+        "name": "G Maths-9",
+        "total_type_questions": 10,
+        "status": true,
+        "icon": ""
+    }
+}
+]

@@ -1,0 +1,158 @@
+[
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2022-06-01T08:48:13.501Z",
+        "user": 1,
+        "content_type": 13,
+        "object_id": "2",
+        "object_repr": "localhost",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2022-06-01T08:48:19.511Z",
+        "user": 1,
+        "content_type": 14,
+        "object_id": "1",
+        "object_repr": "/user-policies/ -- User Policies for Test and Exams.",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2022-06-01T09:04:33.615Z",
+        "user": 1,
+        "content_type": 13,
+        "object_id": "2",
+        "object_repr": "127.0.0.1:8000",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Domain name\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2022-06-01T09:35:38.252Z",
+        "user": 1,
+        "content_type": 14,
+        "object_id": "1",
+        "object_repr": "/user-policies/ -- User Policies for Test and Exams.",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Template name\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+        "action_time": "2022-06-08T21:01:53.470Z",
+        "user": 1,
+        "content_type": 14,
+        "object_id": "2",
+        "object_repr": "/about-us/ -- This is my about us page.",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+        "action_time": "2022-06-08T21:07:05.618Z",
+        "user": 1,
+        "content_type": 14,
+        "object_id": "2",
+        "object_repr": "/about-us/ -- This is my about us page.",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Template name\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+        "action_time": "2022-06-08T21:20:15.517Z",
+        "user": 1,
+        "content_type": 14,
+        "object_id": "2",
+        "object_repr": "/about-us/ -- This is my about us page.",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Template name\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+        "action_time": "2022-06-08T21:21:15.932Z",
+        "user": 1,
+        "content_type": 14,
+        "object_id": "2",
+        "object_repr": "/about-us/ -- This is my about us page.",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Template name\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+        "action_time": "2022-06-08T21:25:08.291Z",
+        "user": 1,
+        "content_type": 14,
+        "object_id": "1",
+        "object_repr": "/user-policies/ -- User Policies for Test and Exams.",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Content\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 10,
+    "fields": {
+        "action_time": "2022-06-08T21:30:24.184Z",
+        "user": 1,
+        "content_type": 14,
+        "object_id": "2",
+        "object_repr": "/about-us/ -- This is my about us page.",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Content\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 11,
+    "fields": {
+        "action_time": "2022-06-09T09:42:35.619Z",
+        "user": 1,
+        "content_type": 16,
+        "object_id": "1",
+        "object_repr": "muzamilqadir2@gmail.com",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 12,
+    "fields": {
+        "action_time": "2022-06-10T19:47:41.517Z",
+        "user": 1,
+        "content_type": 17,
+        "object_id": "1",
+        "object_repr": "What is capital of pakistan?",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+}
+]

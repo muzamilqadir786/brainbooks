@@ -118,7 +118,6 @@ def insert_data(*args):
             if json_data.get('data'):
                 for data in json_data['data']:
                     topic = Topic()
-                    # board_id, class_name_id, subject_id, chapter_id
                     if data.get('board_id'):
                         board_obj, created = Board.objects.get_or_create(id=int(data['board_id']))
                         topic.board = board_obj
