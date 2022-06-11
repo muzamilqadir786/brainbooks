@@ -47,7 +47,7 @@ DJANGO_APPS = [
 SITE_ID = 2
 
 THIRD_PARTY_APPS = [
-    'fixture_magic',
+    
 ]
 
 LOCAL_APPS = [
