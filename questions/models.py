@@ -7,11 +7,11 @@ from django.utils.translation import gettext_lazy as _
 from .choices import BOARD_CHOICES, CLASS_CHOICES, QUESTION_TYPES, ANSWER_OPTIONS
 
 class Board(models.Model):
-    name = models.CharField(
+    name = models.PositiveSmallIntegerField(
         max_length=1,
         choices=BOARD_CHOICES,
         unique = True,
-        )
+    )
 
     class Meta:
         ordering = ['id']
@@ -19,7 +19,12 @@ class Board(models.Model):
     def __str__(self):
         return dict(BOARD_CHOICES)[int(self.name)]
 
-
+# class QuestionMixin:
+#     board = models.ForeignKey('Board', blank=True, null=True, on_delete=models.CASCADE)
+#     class_name = models.ForeignKey('Class', blank=True, null=True, on_delete=models.CASCADE)
+#     subject = models.ForeignKey('Subject', blank=True, null=True, on_delete=models.CASCADE)
+#     class Meta:
+#         abstract = True
 
 class Class(models.Model):
     board = models.ForeignKey('Board', blank=True, null=True, on_delete=models.CASCADE)
@@ -104,7 +109,7 @@ class Topic(models.Model):
 
     class Meta:
         unique_together = ['topic_id','title']
-        ordering = ['subject_id','topic']
+##        ordering = ['subject_id','topic']
 
 
 
